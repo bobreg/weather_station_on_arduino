@@ -168,6 +168,9 @@ int count_wake_up = 0;
 //
 
 void setup() {
+// контакт управления транзистора
+  pinMode(4, INPUT_PULLUP);
+  
   myOLED.begin();
   myOLED.setFont(MediumFontRus);
   Serial.begin(9600);
@@ -178,6 +181,7 @@ void setup() {
 // контакт на прерывание для выхода из сна
   pinMode(2, INPUT);
   attachInterrupt(0, empty_func, RISING);
+
   measure();
   //mySerial.write(cmd_no_abc, 9);
 }
