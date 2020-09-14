@@ -181,7 +181,7 @@ void setup() {
 // контакт на прерывание для выхода из сна
   pinMode(2, INPUT);
   attachInterrupt(0, empty_func, RISING);
-
+  delay(12000);
   measure();
   //mySerial.write(cmd_no_abc, 9);
 }

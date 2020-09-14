@@ -3,13 +3,18 @@ void measure() {
   //-----измерение и сохранение значения уровня СО2--------
   mySerial.write(cmd, 9);
   memset(response, 0, 9);  // заполняет память ответа от датчика нулями
+  delay(10);
   mySerial.readBytes(response, 9);
   if (response[0] == 0xFF && response[1] == 0x86)  {
     level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
   }
+  while (mySerial.available()) {
+    mySerial.read();
+  }
+
   //-----измерение и сохранение температуры, влажности, давления и высоты---------
   if (status_bme) {
-  temperature = bme.readTemperature();
+    temperature = bme.readTemperature();
     pressure = bme.readPressure() / 133.322;
     humidity = bme.readHumidity();
     altitude = bme.readAltitude(const_level / 100);
