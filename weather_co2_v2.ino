@@ -36,7 +36,7 @@ unsigned char response[9];
 //------временные переменные------------------
 unsigned long last_times_1 = 0;
 unsigned long last_times_2 = 0;
-int count_sleepss_period = 0;
+unsigned int count_sleepss_period = 0;
 const int period_sleep = 734; // 2202 примерно 6 часов
 // 734 примерно 2 часа
 // 367 примерно 1 час
@@ -168,20 +168,26 @@ int count_wake_up = 0;
 //
 
 void setup() {
-// контакт управления транзистора
-  pinMode(4, INPUT_PULLUP);
-  
-  myOLED.begin();
-  myOLED.setFont(MediumFontRus);
+// инициализация обмена
   Serial.begin(9600);
   mySerial.begin(9600);
+  Serial.println("re-r");
+
+// инициализация экрана  
+  //myOLED.begin();
+  //myOLED.setFont(MediumFontRus);
+
   last_times_1 = millis();
   last_times_2 = millis();
-  status_bme = bme.begin(0x76);
+  //status_bme = bme.begin(0x76);
 // контакт на прерывание для выхода из сна
   pinMode(2, INPUT);
+  //delay(12000);
+  // measure();
+  Serial.println("re-er");
   attachInterrupt(0, empty_func, RISING);
-  delay(12000);
-  measure();
+// контакт управления транзистора
+  pinMode(4, OUTPUT);
+  digitalWrite(4, LOW);
   //mySerial.write(cmd_no_abc, 9);
 }

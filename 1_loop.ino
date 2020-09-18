@@ -10,15 +10,16 @@ void loop() {
     }
     if (millis() - last_times_2 > 60000) {  //через минуту уходим в сон (60000)
       myOLED.clrScr();              // почистим экран
-      flag_button_wake_up = false;  //сбросим флаг кнопки прерывания
-      long_sleep();                 //уйдём в догий сон
+      flag_button_wake_up = false;  // сбросим флаг кнопки прерывания
+      digitalWrite(4, LOW);         // уберём питание с датчиков и экрана
+      long_sleep();                 // уйдём в догий сон
       last_times_2 = millis();
       measure();                    // как только вышли из сна, опросим датчики
     }
   }
   // по короткому нажатию кнопки меняем инф на экране
   // длинное нажатие (3 секунды) переведёт нас на одну минуту в режим графиков
-  button_plus.check(&view_weather, &history_measuring_as_graf);  
+  button_plus.check(&view_weather, &history_measuring_as_graf);
   button_set.check(&settings, &history_measuring_as_data);
 }
 
@@ -30,6 +31,7 @@ void long_sleep() {
   while (count_sleepss_period < period_sleep) {
     power.sleep(SLEEP_8192MS);
     //отладка
+    Serial.println("e-e");
     myOLED.setCursor(0, 1);
     myOLED.print(count_sleepss_period);
     myOLED.setCursor(0, 3);
@@ -41,8 +43,21 @@ void long_sleep() {
     }
   }
   count_wake_up++;
+  Serial.println("re-re");
+  digitalWrite(4, HIGH);
+  delay(1000);
+  myOLED.begin();
   // тут надо что-то придумать с включением датчиков заранее перед снятием
   // показаний
+  myOLED.clrScr();
+  myOLED.setCursor(0, 1);
+  myOLED.print("wait!");
+  for (byte i = 25; i > 0; i--) {
+    myOLED.setCursor(20, 3);
+    myOLED.print(i);
+    Serial.println(i);
+    delay(1000);
+  }
 }
 
 //-------функция для прерывания которая возводит флаг

@@ -8,7 +8,7 @@ void measure() {
   if (response[0] == 0xFF && response[1] == 0x86)  {
     level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
   }
-  while (mySerial.available()) {
+  while (mySerial.available()) { // необходимо для отчистки регистров порта
     mySerial.read();
   }
 
