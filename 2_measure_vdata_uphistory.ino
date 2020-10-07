@@ -34,7 +34,7 @@ void view_weather() {
     myOLED.setCursor(0, 1);
     myOLED.print("Temp-re: ");
     //отладка
-    myOLED.print(count_wake_up);
+    //myOLED.print(count_wake_up);
     //
     myOLED.setCursor(2, 4);
     myOLED.print(temperature);

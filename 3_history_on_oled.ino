@@ -44,5 +44,4 @@ void view_history(int (* arr), String param){
       count++;
     }
   }
-  
 }

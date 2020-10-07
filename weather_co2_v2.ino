@@ -169,25 +169,27 @@ int count_wake_up = 0;
 
 void setup() {
 // инициализация обмена
-  Serial.begin(9600);
+  //Serial.begin(9600);
   mySerial.begin(9600);
-  Serial.println("re-r");
 
 // инициализация экрана  
-  //myOLED.begin();
-  //myOLED.setFont(MediumFontRus);
+  myOLED.begin();
+  myOLED.setFont(MediumFontRus);
 
   last_times_1 = millis();
   last_times_2 = millis();
-  //status_bme = bme.begin(0x76);
+  //
 // контакт на прерывание для выхода из сна
   pinMode(2, INPUT);
-  //delay(12000);
-  // measure();
-  Serial.println("re-er");
   attachInterrupt(0, empty_func, RISING);
 // контакт управления транзистора
   pinMode(4, OUTPUT);
-  digitalWrite(4, LOW);
+  digitalWrite(4, HIGH);
+  delay(1000);
+  status_bme = bme.begin(0x76);
+  pause("Start in..!");
+  measure();
+  delay(100);
+  //digitalWrite(4, LOW);
   //mySerial.write(cmd_no_abc, 9);
 }
