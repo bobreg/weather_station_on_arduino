@@ -33,13 +33,6 @@ void long_sleep() {
   // на выполнение
   while (count_sleepss_period < period_sleep) {
     power.sleep(SLEEP_8192MS);
-    //отладка
-    //Serial.println("e-e");
-    //myOLED.setCursor(0, 1);
-    //myOLED.print(count_sleepss_period);
-    //myOLED.setCursor(0, 3);
-    //myOLED.print(count_wake_up);
-    //
     count_sleepss_period++;
     if(period_sleep - count_sleepss_period == 10){
       digitalWrite(4, HIGH);  // заранее включим питание на датчиках для прогрева

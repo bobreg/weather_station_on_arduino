@@ -21,14 +21,30 @@ void settings() {
       myOLED.setFont(MediumFontRus);
     }
     if (flag_cal == true) {
-      //mySerial.write(cmd_calibrate, 9);
       myOLED.clrScr();
-      myOLED.setCursor(0, 1);
-      myOLED.print("wait!");
-      for (byte i = 9; i > 0; i--) {
-        myOLED.setCursor(20, 3);
-        myOLED.print(i);
+      bool flag_point = true;  // флаг для мигания точки на экране раз в сек.
+      bool flag_no_cal = false;
+      for (unsigned int i = 1200; i > 0; i--) {
+        flag_no_cal = button_set.check(flag_no_cal); // если нажать, то калибровки не будет
+        flag_point = !flag_point;
+        myOLED.setCursor(0, 1);
+        myOLED.print("wait ");
+        myOLED.print(i/60);
+        myOLED.print(" ");
+        myOLED.setCursor(0, 3);
+        myOLED.print("minutes");
+        flag_point == true ? myOLED.print(" ") : myOLED.print(".");
+        myOLED.setFont(SmallFontRus);
+        myOLED.setCursor(0, 5);
+        myOLED.print("Press \"set\" for break");
+        myOLED.setFont(MediumFontRus);
         delay(1000);
+        if(flag_no_cal == true){
+          break;
+        }
+      }
+      if(flag_no_cal == false){
+        mySerial.write(cmd_calibrate, 9);
       }
       flag = false;
     }
