@@ -95,6 +95,9 @@ void settings() {
       myOLED.print("Please press +");
     }
     if (flag_cal == true) {
+      while (mySerial.available()) { // необходимо для отчистки регистров порта
+      mySerial.read();
+    }
       myOLED.setCursor(0, 5);
       myOLED.print("_____________");
       mySerial.write(cmd, 9);

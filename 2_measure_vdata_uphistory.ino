@@ -1,18 +1,21 @@
 //------измерение всех параметров---------------------
 void measure() {
   //-----измерение и сохранение значения уровня СО2--------
-  mySerial.write(cmd, 9);
-  memset(response, 0, 9);  // заполняет память ответа от датчика нулями
-  delay(10);
-  mySerial.readBytes(response, 9);
-  if (response[0] == 0xFF && response[1] == 0x86)  {
-    level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
+  if (flag_button_wake_up == false) { // если кнопка анктивации была нажата, то
+                               // не надо запрашивать со2 т.к. его надо ещё прогреть
+    mySerial.write(cmd, 9);
+    memset(response, 0, 9);  // заполняет память ответа от датчика нулями
+    delay(10);
+    mySerial.readBytes(response, 9);
+    if (response[0] == 0xFF && response[1] == 0x86)  {
+      level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
+    }
+    while (mySerial.available()) { // необходимо для отчистки регистров порта
+      mySerial.read();
+    }
   }
-  while (mySerial.available()) { // необходимо для отчистки регистров порта
-    mySerial.read();
-  }
-
   //-----измерение и сохранение температуры, влажности, давления и высоты---------
+  status_bme = bme.begin(0x76);
   if (status_bme) {
     temperature = bme.readTemperature();
     pressure = bme.readPressure() / 133.322;
@@ -28,6 +31,7 @@ void measure() {
 
 //-------------режим данных на экране-----------------
 void view_weather() {
+  myOLED.begin();
   type_info_on_oled = (type_info_on_oled + 1) % 5;
   if (type_info_on_oled == 0) {
     myOLED.clrScr();

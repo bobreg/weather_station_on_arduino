@@ -183,8 +183,6 @@ void setup() {
   pinMode(4, OUTPUT);
   digitalWrite(4, HIGH);
   delay(1000);
-  status_bme = bme.begin(0x76);
-  pause("Start in..!");
   measure();
   delay(100);
   //mySerial.write(cmd_no_abc, 9);

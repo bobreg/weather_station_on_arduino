@@ -12,7 +12,7 @@ void loop() {
       view_weather();
     }
     if (millis() - last_times_2 > 60000) {  //через минуту уходим в сон (60000)
-      myOLED.clrScr();              // почистим экран
+      //myOLED.clrScr();              // почистим экран
       flag_button_wake_up = false;  // сбросим флаг кнопки прерывания
       digitalWrite(4, LOW);         // уберём питание с датчиков и экрана
       long_sleep();                 // уйдём в догий сон
@@ -34,7 +34,7 @@ void long_sleep() {
   while (count_sleepss_period < period_sleep) {
     power.sleep(SLEEP_8192MS);
     count_sleepss_period++;
-    if(period_sleep - count_sleepss_period == 10){
+    if(period_sleep - count_sleepss_period == 20){
       digitalWrite(4, HIGH);  // заранее включим питание на датчиках для прогрева
                               // и корректного ответа
     }
@@ -46,8 +46,6 @@ void long_sleep() {
   //Serial.println("re-re");
   digitalWrite(4, HIGH);
   delay(1000);
-  status_bme = bme.begin(0x76);
-  pause("Wait!");
 }
 
 //-------функция для прерывания которая возводит флаг
