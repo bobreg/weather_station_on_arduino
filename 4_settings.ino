@@ -87,28 +87,27 @@ void settings() {
     for (; c < 1; c++) {
       myOLED.clrScr();
       myOLED.setCursor(0, 1);
-      myOLED.print("Request ");
-      myOLED.setCursor(0, 3);
-      myOLED.print("CO_2?");
+      myOLED.print("Request all");
       myOLED.setFont(SmallFontRus);
-      myOLED.setCursor(0, 5);
+      myOLED.setCursor(0, 3);
       myOLED.print("Please press +");
     }
     if (flag_cal == true) {
-      while (mySerial.available()) { // необходимо для отчистки регистров порта
-      mySerial.read();
-    }
+      measure();
+      myOLED.setCursor(0, 3);
+      myOLED.print(level_co2);
+      myOLED.print("ppm");
+      myOLED.print("       ");
+      myOLED.print(temperature);
+      myOLED.print("grad");
+      myOLED.print("   ");
       myOLED.setCursor(0, 5);
-      myOLED.print("_____________");
-      mySerial.write(cmd, 9);
-      memset(response, 0, 9);  // заполняет память ответа от датчика нулями
-      mySerial.readBytes(response, 9);
-      if (response[0] == 0xFF && response[1] == 0x86)  {
-        level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
-        myOLED.setCursor(0, 5);
-        myOLED.print(level_co2);
-        history_co2[0] = level_co2;
-      }
+      myOLED.print(pressure);
+      myOLED.print("kPa");
+      myOLED.print("       ");
+      myOLED.print(humidity);
+      myOLED.print("%");
+      myOLED.print("   ");
       delay(1000);
       flag_cal = false;
     }

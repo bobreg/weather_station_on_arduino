@@ -3,21 +3,21 @@ void loop() {
     count_sleepss_period = 0;          // обнулим количество периодов долгого сна
     measure();                         //опросим датчики
     update_history();                  // обновим историю
+    send_param();
     digitalWrite(4, LOW);              // уберём питание с датчиков и экрана
     long_sleep();                      // и опять уйдём в сон
   } else {                                  // если кнопка прерывания была нажата, то
-    measure();                    // как только вышли из сна, опросим датчики
     if (millis() - last_times_1 > 5000) {  // каждые пять секунд меняем информацию
+      flag_button_wake_up = false;  // сбросим флаг кнопки прерывания
       last_times_1 = millis();             // на экране
       view_weather();
     }
     if (millis() - last_times_2 > 60000) {  //через минуту уходим в сон (60000)
       //myOLED.clrScr();              // почистим экран
-      flag_button_wake_up = false;  // сбросим флаг кнопки прерывания
       digitalWrite(4, LOW);         // уберём питание с датчиков и экрана
       long_sleep();                 // уйдём в догий сон
       last_times_2 = millis();
-      
+      measure();
     }
   }
   // по короткому нажатию кнопки меняем инф на экране
@@ -32,17 +32,21 @@ void long_sleep() {
   // прошло периодов и уходит обратно в сон или дальше
   // на выполнение
   while (count_sleepss_period < period_sleep) {
-    power.sleep(SLEEP_8192MS);
+    
+    //power.sleep(SLEEP_8192MS);
+    delay(8192);
     count_sleepss_period++;
-    if(period_sleep - count_sleepss_period == 20){
+    if(period_sleep - count_sleepss_period < 20){
+      Serial.println("разбудим датчики");
       digitalWrite(4, HIGH);  // заранее включим питание на датчиках для прогрева
                               // и корректного ответа
     }
     if (flag_button_wake_up == true) {
       break;
     }
+    Serial.println(count_sleepss_period);
   }
-  count_wake_up++;
+  //count_wake_up++;
   //Serial.println("re-re");
   digitalWrite(4, HIGH);
   delay(1000);
@@ -53,6 +57,7 @@ void long_sleep() {
 void empty_func() {
   flag_button_wake_up = true;
   last_times_2 = millis();
+  Serial.println("нажали кнопку");
 }
 
 //------------вывод паузы---------------

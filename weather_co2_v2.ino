@@ -34,7 +34,7 @@ unsigned char response[9];
 unsigned long last_times_1 = 0;
 unsigned long last_times_2 = 0;
 unsigned int count_sleepss_period = 0;
-const int period_sleep = 734; // 2202 примерно 6 часов
+const int period_sleep = 25; // 2202 примерно 6 часов
 // 734 примерно 2 часа
 // 367 примерно 1 час
 // 61 примерно 10 мин.
@@ -166,7 +166,7 @@ int count_wake_up = 0;
 
 void setup() {
 // инициализация обмена
-  //Serial.begin(9600);
+  Serial.begin(9600);
   mySerial.begin(9600);
 
 // инициализация экрана  
@@ -182,8 +182,6 @@ void setup() {
 // контакт управления транзистора
   pinMode(4, OUTPUT);
   digitalWrite(4, HIGH);
-  delay(1000);
-  measure();
-  delay(100);
+  delay(2000);
   //mySerial.write(cmd_no_abc, 9);
 }
