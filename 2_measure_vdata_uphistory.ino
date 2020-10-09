@@ -1,21 +1,13 @@
 //------измерение всех параметров---------------------
 void measure() {
-  //-----измерение и сохранение значения уровня СО2--------
-  if (flag_button_wake_up == false) { // если кнопка анктивации была нажата, то
-                               // не надо запрашивать со2 т.к. его надо ещё прогреть
-    mySerial.write(cmd, 9);
-    memset(response, 0, 9);  // заполняет память ответа от датчика нулями
-    delay(10);
-    mySerial.readBytes(response, 9);
-    if (response[0] == 0xFF && response[1] == 0x86)  {
-      level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
-    }
-    while (mySerial.available()) { // необходимо для отчистки регистров порта
-      mySerial.read();
-    }
-  }
+  Serial.println("---measure---");
+  measure_co2();
+  Serial.println("запросим со2");
+  Serial.println(level_co2);
   //-----измерение и сохранение температуры, влажности, давления и высоты---------
   status_bme = bme.begin(0x76);
+  Serial.print("status_bme: ");
+  Serial.println(status_bme);
   if (status_bme) {
     temperature = bme.readTemperature();
     pressure = bme.readPressure() / 133.322;
@@ -101,4 +93,36 @@ void update_history() {
   history_temperature[0] = temperature;
   history_pressure[0] = pressure;
   history_humidity[0] = humidity;
+}
+
+
+void send_param() {
+  Serial.println("параметры");
+  Serial.println(temperature);
+  Serial.println(pressure);
+  Serial.println(humidity);
+  Serial.println("---------");
+}
+
+
+void measure_co2() {
+  int timer = millis();
+  for (int i = 20; i >= 0; i--) {
+    if (millis - timer > 10000) {
+      timer = millis();
+      mySerial.write(cmd, 9);
+      memset(response, 0, 9);  // заполняет память ответа от датчика нулями
+      delay(100);
+      mySerial.readBytes(response, 9);
+      if (response[0] == 0xFF && response[1] == 0x86)  {
+        level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
+      }
+      if(level_co2 != 0 && level_co2 != 410 && level_co2 != 430){
+        break;
+      }
+      while (mySerial.available()) { // необходимо для отчистки регистров порта
+        mySerial.read();
+      }
+    }
+  }
 }

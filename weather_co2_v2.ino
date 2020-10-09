@@ -160,13 +160,10 @@ bool flag_history_data = true; // флаг для входа в режим от�
 byte type_info_on_oled = 4;
 byte type_history_on_oled = 0;
 byte type_graf_on_oled = 0;
-//отладка
-int count_wake_up = 0;
-//
 
 void setup() {
 // инициализация обмена
-  //Serial.begin(9600);
+  Serial.begin(9600);
   mySerial.begin(9600);
 
 // инициализация экрана  
@@ -175,15 +172,13 @@ void setup() {
 
   last_times_1 = millis();
   last_times_2 = millis();
-  //
+
 // контакт на прерывание для выхода из сна
   pinMode(2, INPUT);
   attachInterrupt(0, empty_func, RISING);
 // контакт управления транзистора
   pinMode(4, OUTPUT);
   digitalWrite(4, HIGH);
-  delay(1000);
-  measure();
-  delay(100);
+  delay(2000);
   //mySerial.write(cmd_no_abc, 9);
 }
