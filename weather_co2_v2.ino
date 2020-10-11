@@ -34,7 +34,7 @@ unsigned char response[9];
 unsigned long last_times_1 = 0;
 unsigned long last_times_2 = 0;
 unsigned int count_sleepss_period = 0;
-const int period_sleep = 734; // 2202 примерно 6 часов
+const int period_sleep = 25; // 2202 примерно 6 часов
 // 734 примерно 2 часа
 // 367 примерно 1 час
 // 61 примерно 10 мин.

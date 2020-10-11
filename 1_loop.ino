@@ -3,6 +3,7 @@ void loop() {
     count_sleepss_period = 0;          // обнулим количество периодов долгого сна
     measure();                         // опросим датчики
     update_history();                  // обновим историю
+<<<<<<< HEAD
     send_param();                      // функция отладки
     digitalWrite(4, LOW);              // уберём питание с датчиков и экрана
     long_sleep();                      // и опять уйдём в сон
@@ -12,6 +13,19 @@ void loop() {
       view_weather();
     }
     if (millis() - last_times_2 > 60000) {  //через минуту уходим в сон (60000)
+=======
+    send_param();
+    digitalWrite(4, LOW);              // уберём питание с датчиков и экрана
+    long_sleep();                      // и опять уйдём в сон
+  } else {                                  // если кнопка прерывания была нажата, то
+    if (millis() - last_times_1 > 5000) {  // каждые пять секунд меняем информацию
+      flag_button_wake_up = false;  // сбросим флаг кнопки прерывания
+      last_times_1 = millis();             // на экране
+      view_weather();
+    }
+    if (millis() - last_times_2 > 60000) {  //через минуту уходим в сон (60000)
+      //myOLED.clrScr();              // почистим экран
+>>>>>>> f51afda13614fd8ecd70466866530d673dec91c7
       digitalWrite(4, LOW);         // уберём питание с датчиков и экрана
       flag_button_wake_up = false;  // сбросим флаг кнопки прерывания
       long_sleep();                 // уйдём в догий сон
@@ -32,8 +46,13 @@ void long_sleep() {
   // на выполнение
   while (count_sleepss_period < period_sleep) {
     
+<<<<<<< HEAD
     power.sleep(SLEEP_8192MS);
     //delay(8192);
+=======
+    //power.sleep(SLEEP_8192MS);
+    delay(8192);
+>>>>>>> f51afda13614fd8ecd70466866530d673dec91c7
     count_sleepss_period++;
     if(period_sleep - count_sleepss_period < 20){
       Serial.println("разбудим датчики");
@@ -45,8 +64,15 @@ void long_sleep() {
     }
     Serial.println(count_sleepss_period);
   }
+<<<<<<< HEAD
   digitalWrite(4, HIGH);             // включим датчики
   delay(2000);                       // выдержим паузу
+=======
+  //count_wake_up++;
+  //Serial.println("re-re");
+  digitalWrite(4, HIGH);
+  delay(1000);
+>>>>>>> f51afda13614fd8ecd70466866530d673dec91c7
 }
 
 //-------функция для прерывания которая возводит флаг
