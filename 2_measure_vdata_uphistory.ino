@@ -1,28 +1,9 @@
 //------измерение всех параметров---------------------
 void measure() {
   Serial.println("---measure---");
-<<<<<<< HEAD
   measure_co2();
   Serial.println("запросим со2");
   Serial.println(level_co2);
-=======
-  //-----измерение и сохранение значения уровня СО2--------
-  if (flag_button_wake_up == false) { // если кнопка анктивации была нажата, то
-                               // не надо запрашивать со2 т.к. его надо ещё прогреть
-    memset(response, 0, 9);  // заполняет память ответа от датчика нулями                           
-    mySerial.write(cmd, 9);
-    delay(100);
-    mySerial.readBytes(response, 9);
-    if (response[0] == 0xFF && response[1] == 0x86)  {
-      level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
-    }
-    while (mySerial.available()) { // необходимо для отчистки регистров порта
-      mySerial.read();
-    }
-    Serial.println("запросим со2");
-    Serial.println(level_co2);
-  }
->>>>>>> f51afda13614fd8ecd70466866530d673dec91c7
   //-----измерение и сохранение температуры, влажности, давления и высоты---------
   status_bme = bme.begin(0x76);
   Serial.print("status_bme: ");
@@ -115,18 +96,13 @@ void update_history() {
 }
 
 
-<<<<<<< HEAD
 void send_param() {
-=======
-void send_param(){
->>>>>>> f51afda13614fd8ecd70466866530d673dec91c7
   Serial.println("параметры");
   Serial.println(temperature);
   Serial.println(pressure);
   Serial.println(humidity);
   Serial.println("---------");
 }
-<<<<<<< HEAD
 
 
 void measure_co2() {
@@ -150,5 +126,3 @@ void measure_co2() {
     }
   }
 }
-=======
->>>>>>> f51afda13614fd8ecd70466866530d673dec91c7

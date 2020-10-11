@@ -89,38 +89,23 @@ void settings() {
       myOLED.setFont(SmallFontRus);
       myOLED.setCursor(0, 1);
       myOLED.print("Request all");
-<<<<<<< HEAD
-=======
-      myOLED.setFont(SmallFontRus);
->>>>>>> f51afda13614fd8ecd70466866530d673dec91c7
       myOLED.setCursor(0, 3);
       myOLED.print("Please press +");
     }
     if (flag_cal == true) {
       measure();
-<<<<<<< HEAD
       update_history();
       myOLED.setCursor(0, 3);
       myOLED.print(level_co2);
       myOLED.print("ppm");
       myOLED.print("    ");
-=======
-      myOLED.setCursor(0, 3);
-      myOLED.print(level_co2);
-      myOLED.print("ppm");
-      myOLED.print("       ");
->>>>>>> f51afda13614fd8ecd70466866530d673dec91c7
       myOLED.print(temperature);
       myOLED.print("grad");
       myOLED.print("   ");
       myOLED.setCursor(0, 5);
       myOLED.print(pressure);
       myOLED.print("kPa");
-<<<<<<< HEAD
       myOLED.print("    ");
-=======
-      myOLED.print("       ");
->>>>>>> f51afda13614fd8ecd70466866530d673dec91c7
       myOLED.print(humidity);
       myOLED.print("%");
       myOLED.print("   ");
