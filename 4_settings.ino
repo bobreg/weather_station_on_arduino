@@ -93,6 +93,10 @@ void settings() {
       myOLED.print("Please press +");
     }
     if (flag_cal == true) {
+      myOLED.setCursor(0, 3);
+      myOLED.print("Please wait 3 min");
+      myOLED.setCursor(0, 5);
+      myOLED.print("....");
       measure();
       update_history();
       myOLED.setCursor(0, 3);
