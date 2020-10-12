@@ -2,8 +2,6 @@
 void measure() {
   Serial.println("---measure---");
   measure_co2();
-  Serial.println("запросим со2");
-  Serial.println(level_co2);
   //-----измерение и сохранение температуры, влажности, давления и высоты---------
   status_bme = bme.begin(0x76);
   Serial.print("status_bme: ");
@@ -104,11 +102,16 @@ void send_param() {
   Serial.println("---------");
 }
 
-
+// запрос со2 надо делать долго, ибо после включения датчик некоторое время даёт
+// одинаковый ответ
 void measure_co2() {
-  int timer = millis();
-  for (int i = 20; i >= 0; i--) {
-    if (millis - timer > 10000) {
+  Serial.println("запросим со2");
+  unsigned long timer = millis();
+  bool flag = true;
+  int count_period = 20;
+  while (flag == true) {
+    if (millis() - timer > 10000) {
+      count_period--;
       timer = millis();
       mySerial.write(cmd, 9);
       memset(response, 0, 9);  // заполняет память ответа от датчика нулями
@@ -117,12 +120,14 @@ void measure_co2() {
       if (response[0] == 0xFF && response[1] == 0x86)  {
         level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
       }
-      if(level_co2 != 0 && level_co2 != 410 && level_co2 != 430){
-        break;
-      }
-      while (mySerial.available()) { // необходимо для отчистки регистров порта
-        mySerial.read();
-      }
+      Serial.println(level_co2);
+    }
+    while (mySerial.available()) { // необходимо для отчистки регистров порта
+      mySerial.read();
+    }
+    flag = button_set.check(flag);
+    if (count_period == 0) {
+      break;
     }
   }
 }

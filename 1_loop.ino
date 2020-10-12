@@ -12,11 +12,10 @@ void loop() {
       view_weather();
     }
     if (millis() - last_times_2 > 60000) {  //через минуту уходим в сон (60000)
-      digitalWrite(4, LOW);         // уберём питание с датчиков и экрана
       flag_button_wake_up = false;  // сбросим флаг кнопки прерывания
+      digitalWrite(4, LOW);         // уберём питание с датчиков и экрана
       long_sleep();                 // уйдём в догий сон
       last_times_2 = millis();
-      measure();
     }
   }
   // по короткому нажатию кнопки меняем инф на экране
@@ -31,11 +30,11 @@ void long_sleep() {
   // прошло периодов и уходит обратно в сон или дальше
   // на выполнение
   while (count_sleepss_period < period_sleep) {
+    delay(300); //перед сном нужно выдержать паузу, чтобы отработала переферия
     power.sleep(SLEEP_8192MS);
     //delay(8192);
     count_sleepss_period++;
     if(period_sleep - count_sleepss_period < 20){
-      Serial.println("разбудим датчики");
       digitalWrite(4, HIGH);  // заранее включим питание на датчиках для прогрева
                               // и корректного ответа
     }
@@ -45,7 +44,7 @@ void long_sleep() {
     Serial.println(count_sleepss_period);
   }
   digitalWrite(4, HIGH);             // включим датчики
-  delay(2000);                       // выдержим паузу
+  //delay(2000);                       // выдержим паузу
 }
 
 //-------функция для прерывания которая возводит флаг
