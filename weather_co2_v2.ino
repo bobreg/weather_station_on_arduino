@@ -162,7 +162,7 @@ byte type_graf_on_oled = 0;
 void setup() {
   power.autoCalibrate();
 // инициализация обмена
-  //Serial.begin(9600);
+  Serial.begin(9600);
   mySerial.begin(9600);
 
 // инициализация экрана  
