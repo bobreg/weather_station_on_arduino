@@ -15,7 +15,6 @@ void loop() {
       flag_button_wake_up = false;  // сбросим флаг кнопки прерывания
       digitalWrite(4, LOW);         // уберём питание с датчиков и экрана
       long_sleep();                 // уйдём в догий сон
-      last_times_2 = millis();
     }
   }
   // по короткому нажатию кнопки меняем инф на экране
@@ -44,15 +43,16 @@ void long_sleep() {
     //Serial.println(count_sleepss_period);
   }
   digitalWrite(4, HIGH);             // включим датчики
-  //delay(2000);                       // выдержим паузу
+  last_times_1 = millis();
+  last_times_2 = millis();
+  delay(2000);                       // выдержим паузу
 }
 
 //-------функция для прерывания которая возводит флаг
 //-------и по этому флагу ардуина выходит из долгого сна-------------
 void empty_func() {
   flag_button_wake_up = true;
-  last_times_2 = millis();
-  //Serial.println("нажали кнопку");
+  Serial.println("нажали кнопку");
 }
 
 //------------вывод паузы---------------

@@ -1,6 +1,8 @@
 //------измерение всех параметров---------------------
 void measure() {
   //Serial.println("---measure---");
+  myOLED.setCursor(0, 1);
+  myOLED.print("Measure");
   measure_co2();
   //-----измерение и сохранение температуры, влажности, давления и высоты---------
   status_bme = bme.begin(0x76);
@@ -17,11 +19,14 @@ void measure() {
     humidity = 255;
     altitude = 255;
   }
+  myOLED.clrScr();
 }
 
 //-------------режим данных на экране-----------------
 void view_weather() {
   myOLED.begin();
+  //Serial.println("показываю");
+  myOLED.setFont(MediumFontRus);
   type_info_on_oled = (type_info_on_oled + 1) % 5;
   if (type_info_on_oled == 0) {
     myOLED.clrScr();
@@ -94,13 +99,13 @@ void update_history() {
 }
 
 /*
-void send_param() {
+  void send_param() {
   Serial.println("параметры");
   Serial.println(temperature);
   Serial.println(pressure);
   Serial.println(humidity);
   Serial.println("---------");
-}
+  }
 */
 // запрос со2 надо делать долго, ибо после включения датчик некоторое время даёт
 // одинаковый ответ
@@ -111,6 +116,11 @@ void measure_co2() {
   int count_period = 20;
   while (flag == true) {
     if (millis() - timer > 10000) {
+      myOLED.setFont(MediumFontRus);
+      myOLED.setCursor(0, 5);
+      myOLED.print("---");
+      myOLED.print(count_period);
+      myOLED.print("--- ");
       count_period--;
       timer = millis();
       mySerial.write(cmd, 9);
@@ -121,6 +131,11 @@ void measure_co2() {
         level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
       }
       //Serial.println(level_co2);
+      myOLED.setFont(SmallFontRus);
+      myOLED.setCursor(0, 7);
+      myOLED.print("Level CO_2: ");
+      myOLED.print(level_co2);
+      myOLED.print("--- ");
     }
     while (mySerial.available()) { // необходимо для отчистки регистров порта
       mySerial.read();
