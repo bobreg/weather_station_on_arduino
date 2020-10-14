@@ -7,16 +7,6 @@
 
 #define count_points_history 24
 
-
-/*
- * 
- * нужно предусмотреть режим постоянной работы 
- * чтобы можно было откалибровать СО_2 не менее 20 минут для калибровки
- * дачик
- */
-
-
-
 //------инициируем библиотеку экранчика---------
 
 iarduino_OLED_txt myOLED(0x3C);
@@ -34,7 +24,7 @@ unsigned char response[9];
 unsigned long last_times_1 = 0;
 unsigned long last_times_2 = 0;
 unsigned int count_sleepss_period = 0;
-const int period_sleep = 423; // 2202 примерно 6 часов
+const int period_sleep = 423;
 // 846 примерно 2 часа
 // 423 примерно 1 час
 
@@ -164,11 +154,7 @@ void setup() {
 // инициализация обмена
   //Serial.begin(9600);
   mySerial.begin(9600);
-
-// инициализация экрана  
-  myOLED.begin();
-  myOLED.setFont(MediumFontRus);
-
+// инициализация главных таймеров
   last_times_1 = millis();
   last_times_2 = millis();
 
@@ -178,10 +164,8 @@ void setup() {
 // контакт управления транзистора
   pinMode(4, OUTPUT);
   digitalWrite(4, HIGH);
-  //delay(2000);
   while (mySerial.available()) { // необходимо для отчистки регистров порта
       mySerial.read();
   }
-  //Serial.println("setup закончен");
   //mySerial.write(cmd_no_abc, 9);
 }

@@ -3,7 +3,7 @@ void loop() {
     count_sleepss_period = 0;          // обнулим количество периодов долгого сна
     measure();                         // опросим датчики
     update_history();                  // обновим историю
-    //send_param();                      // функция отладки
+    //Serial.println("всё измерили и обновили историю");
     digitalWrite(4, LOW);              // уберём питание с датчиков и экрана
     long_sleep();                      // и опять уйдём в сон
   } else {                                  // если кнопка прерывания была нажата, то
@@ -31,12 +31,7 @@ void long_sleep() {
   while (count_sleepss_period < period_sleep) {
     delay(300); //перед сном нужно выдержать паузу, чтобы отработала переферия
     power.sleep(SLEEP_8192MS);
-    //delay(8192);
     count_sleepss_period++;
-    if(period_sleep - count_sleepss_period < 20){
-      digitalWrite(4, HIGH);  // заранее включим питание на датчиках для прогрева
-                              // и корректного ответа
-    }
     if (flag_button_wake_up == true) {
       break;
     }
@@ -45,27 +40,12 @@ void long_sleep() {
   digitalWrite(4, HIGH);             // включим датчики
   last_times_1 = millis();
   last_times_2 = millis();
-  delay(2000);                       // выдержим паузу
+  delay(1000);                       // выдержим паузу
 }
 
 //-------функция для прерывания которая возводит флаг
 //-------и по этому флагу ардуина выходит из долгого сна-------------
 void empty_func() {
   flag_button_wake_up = true;
-  Serial.println("нажали кнопку");
-}
-
-//------------вывод паузы---------------
-void pause(String str){
-  myOLED.begin();
-  myOLED.setFont(MediumFontRus);
-  myOLED.setCursor(0, 1);
-  myOLED.print(str);
-  for (int i = 70; i > 0; i--) {
-    myOLED.setCursor(20, 3);
-    myOLED.print(i);
-    myOLED.print(" ");
-    //Serial.println(i);
-    delay(1000);
-  }
+  //Serial.println("нажали кнопку");
 }

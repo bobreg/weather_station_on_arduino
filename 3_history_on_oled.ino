@@ -32,13 +32,11 @@ void change_history_data(){
 void view_history(int (* arr), String param){
   myOLED.clrScr();
   myOLED.setFont(SmallFontRus);
-  myOLED.setCursor(0, 0);
-  myOLED.print(param);
+  myOLED.print(param, 0, 0);
   byte count = 1;
   for(byte i = 1; i < 8; i++){
     for(byte j = 0; j < 120; j+=40){
-      myOLED.setCursor(j, i);
-      myOLED.print(count);
+      myOLED.print(count, j, i);
       myOLED.print(".");
       myOLED.print(arr[count-1]);
       count++;

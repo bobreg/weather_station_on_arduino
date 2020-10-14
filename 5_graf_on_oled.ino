@@ -32,8 +32,7 @@ void change_graf() {
 void view_graf(int (* arr), String param) {
   myOLED.clrScr();
   myOLED.setFont(SmallFontRus);
-  myOLED.setCursor(0, 0);
-  myOLED.print(param);
+  myOLED.print(param, 0, 0);
 
   int min_p = arr[0];
   for (int i = 1; i < count_points_history; i++) {
@@ -54,16 +53,12 @@ void view_graf(int (* arr), String param) {
   }
   for (int x = 0; x < count_points_history; x++) {
     byte y = 7 - map(arr[x], min_p, max_p, 0, 5);
-    myOLED.setCursor(x * 4, y);
-    myOLED.print(".");
+    myOLED.print(".", x * 4, y);
     for (byte yn = y + 1; yn < 8; yn++) {
-      myOLED.setCursor(x * 4, yn);
-      myOLED.print("|");
+      myOLED.print("|", x * 4, yn);
     }
   }
-  myOLED.setCursor(100, 7);
-  myOLED.print(min_p);
-  myOLED.setCursor(100, 3);
-  myOLED.print(max_p);
+  myOLED.print(min_p, 100, 7);
+  myOLED.print(max_p, 100, 3);
 
 }

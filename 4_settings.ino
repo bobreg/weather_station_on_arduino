@@ -1,8 +1,7 @@
 //------------настройка-------------------------------
 void settings() {
   myOLED.clrScr();
-  myOLED.setCursor(0, 1);
-  myOLED.print("Settings");
+  myOLED.print("Settings", 0, 1);
   delay(1000);
   bool flag = true;
   bool flag_cal = false;
@@ -11,13 +10,10 @@ void settings() {
     flag = button_set.check(flag);
     flag_cal = button_plus.check(flag_cal);
     for (; c < 1; c++) {
-      myOLED.setCursor(0, 1);
-      myOLED.print("Calibrate");
-      myOLED.setCursor(0, 3);
-      myOLED.print("CO_2 ?");
+      myOLED.print("Calibrate", 0, 1);
+      myOLED.print("CO_2 ?", 0, 3);
       myOLED.setFont(SmallFontRus);
-      myOLED.setCursor(0, 5);
-      myOLED.print("Please press +");
+      myOLED.print("Please press +", 0, 5);
       myOLED.setFont(MediumFontRus);
     }
     if (flag_cal == true) {
@@ -27,16 +23,14 @@ void settings() {
       for (unsigned int i = 1200; i > 0; i--) {
         flag_no_cal = button_set.check(flag_no_cal); // если нажать, то калибровки не будет
         flag_point = !flag_point;
-        myOLED.setCursor(0, 1);
-        myOLED.print("wait ");
+        //myOLED.setCursor(0, 1);
+        myOLED.print("wait ", 0, 1);
         myOLED.print(i/60);
         myOLED.print(" ");
-        myOLED.setCursor(0, 3);
-        myOLED.print("minutes");
+        myOLED.print("minutes", 0, 3);
         flag_point == true ? myOLED.print(" ") : myOLED.print(".");
         myOLED.setFont(SmallFontRus);
-        myOLED.setCursor(0, 5);
-        myOLED.print("Press \"set\" for break");
+        myOLED.print("Press \"set\" for break", 0, 5);
         myOLED.setFont(MediumFontRus);
         delay(1000);
         if(flag_no_cal == true){
@@ -57,19 +51,15 @@ void settings() {
     flag_cal = button_plus.check(flag_cal);
     for (; c < 1; c++) {
       myOLED.clrScr();
-      myOLED.setCursor(0, 1);
-      myOLED.print("Reset CO_2");
-      myOLED.setCursor(0, 3);
-      myOLED.print("history ?");
+      myOLED.print("Reset CO_2", 0, 1);
+      myOLED.print("history ?", 0, 3);
       myOLED.setFont(SmallFontRus);
-      myOLED.setCursor(0, 5);
-      myOLED.print("Please press +");
+      myOLED.print("Please press +", 0, 5);
       myOLED.setFont(MediumFontRus);
     }
     if (flag_cal == true) {
       myOLED.clrScr();
-      myOLED.setCursor(0, 1);
-      myOLED.print("OK!");
+      myOLED.print("OK!", 0, 1);
       history_co2[0] = 900;
       for (byte i = 1; i < count_points_history; i++) {
         history_co2[i] = 1000;
@@ -87,27 +77,21 @@ void settings() {
     for (; c < 1; c++) {
       myOLED.clrScr();
       myOLED.setFont(SmallFontRus);
-      myOLED.setCursor(0, 1);
-      myOLED.print("Request all");
-      myOLED.setCursor(0, 3);
-      myOLED.print("Please press +");
+      myOLED.print("Request all", 0, 1);
+      myOLED.print("Please press +", 0, 3);
     }
     if (flag_cal == true) {
-      myOLED.setCursor(0, 3);
-      myOLED.print("Please wait 3 min");
-      myOLED.setCursor(0, 5);
-      myOLED.print("....");
+      myOLED.print("Please wait 3 min", 0, 3);
+      myOLED.print("....", 0, 5);
       measure();
       update_history();
-      myOLED.setCursor(0, 3);
-      myOLED.print(level_co2);
+      myOLED.print(level_co2, 0, 3);
       myOLED.print("ppm");
       myOLED.print("    ");
       myOLED.print(temperature);
       myOLED.print("grad");
       myOLED.print("   ");
-      myOLED.setCursor(0, 5);
-      myOLED.print(pressure);
+      myOLED.print(pressure, 0, 5);
       myOLED.print("kPa");
       myOLED.print("    ");
       myOLED.print(humidity);
