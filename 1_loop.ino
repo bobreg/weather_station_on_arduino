@@ -35,7 +35,7 @@ void long_sleep() {
     if (flag_button_wake_up == true) {
       break;
     }
-    //Serial.println(count_sleepss_period);
+    Serial.println(count_sleepss_period);
   }
   digitalWrite(4, HIGH);             // включим датчики
   last_times_1 = millis();

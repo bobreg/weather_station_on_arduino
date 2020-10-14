@@ -92,7 +92,7 @@ void update_history() {
 // запрос со2 надо делать долго, ибо после включения датчик некоторое время даёт
 // одинаковый ответ
 void measure_co2() {
-  //Serial.println("запросим со2");
+  Serial.println("запросим со2");
   unsigned long timer = millis();
   bool flag = true;
   int count_period = 20;
@@ -112,7 +112,7 @@ void measure_co2() {
       if (response[0] == 0xFF && response[1] == 0x86)  {
         level_co2 = 256 * (unsigned int)response[2] + (unsigned int)response[3];
       }
-      //Serial.println(level_co2);
+      Serial.println(level_co2);
       myOLED.setFont(SmallFontRus);
       myOLED.print("Level CO_2: ", 0, 7);
       myOLED.print(level_co2);
